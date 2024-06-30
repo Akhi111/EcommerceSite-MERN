@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const PORT = 5454;
+const PORT = process.env.PORT || 5454;
 app.listen(PORT, async() => {
   await connectMongoDB();
   console.log("Server is running on PORT:", PORT);
