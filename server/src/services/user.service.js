@@ -1,6 +1,6 @@
 import User from "..//models/user.model.js";
 import bcrypt from "bcrypt";
-import jwtProvider from "../utils/jwtProvider.js";
+import { generateToken, getUserIdFromToken } from "../utils/jwtProvider.js";
 
 export const createUser = async (userData) => {
   try {
@@ -9,10 +9,12 @@ export const createUser = async (userData) => {
     const isUserExist = await User.findOne({ email });
 
     if (isUserExist) {
-      throw new Error("A user with this email address already exists:", email);
+      throw new Error(
+        `A user with this email address already exists: ${email}`
+      );
     }
-    const salt = await bcrypt.genSalt(10);
-    password = await bcrypt.hash(password, salt);
+
+    password = await bcrypt.hash(password, 10);
 
     // Create the user in the database
     const newUser = await User.create({ firstName, lastName, email, password });
@@ -25,7 +27,8 @@ export const createUser = async (userData) => {
 
 export const findUserById = async (userId) => {
   try {
-    const user = await User.findById(userId).populate("addresses");
+    const user = await User.findById(userId)
+    // .populate("address");
     if (!user) {
       throw new Error("User not found with id :", userId);
     }
@@ -49,14 +52,15 @@ export const getUserByEmail = async (email) => {
 
 export const getUserProfileByToken = async (token) => {
   try {
-    const userId = jwtProvider.getUserProfileByToken(token);
+    const userId = getUserIdFromToken(token);
     const user = await findUserById(userId);
     if (!user) {
-      throw new Error("User not found with id: ", userId);
+      throw new Error(`User not found with id: ${userId}`);
     }
+    console.log("user", user);
     return user;
   } catch (error) {
-    throw new Error("Failed to find user by id: ", error.message);
+    throw new Error(`Failed to get user profile: ${error.message}`);
   }
 };
 

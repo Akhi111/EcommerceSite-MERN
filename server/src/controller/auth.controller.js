@@ -1,25 +1,31 @@
-import userService from "../services/user.service.js";
-import jwtProvider from "../utils/jwtProvider.js";
+import {
+  createUser,
+  findUserById,
+  getUserByEmail,
+  getUserProfileByToken,
+  getAllUsers,
+} from "../services/user.service.js";
+import {generateToken} from "../utils/jwtProvider.js";
 import bcrypt from "bcrypt";
-import cartService from "../services/cart.service.js";
+import createCart from "../services/cart.service.js";
 
 export const signup = async (req, res) => {
   try {
-    const user = await userService.createUser(req.body);
-    const jwt = jwtProvider.generateToken(user._id);
+    const user = await createUser(req.body);
+    const jwt = generateToken(user._id);
 
-    await cartService.createCart(user);
+    await createCart(user);
 
-    return res.status(200).send({ jwt, message: "register successfull" });
+    return res.status(200).send({ jwt, message: "signup successful" });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
 };
 
-export const login = async (req, res) => {
+export const signin = async (req, res) => {
   const { password, email } = req.body;
   try {
-    const user = await userService.getUserByEmail(email);
+    const user = await getUserByEmail(email);
     if (!user) {
       return res
         .status(404)
@@ -29,8 +35,8 @@ export const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).send({ message: "Invalid Password" });
     }
-    const jwt = jwtProvider.generateToken(user._id);
-    return res.status(200).send({ jwt, message: "login successfull" });
+    const jwt = generateToken(user._id);
+    return res.status(200).send({ jwt, message: "signin successful" });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }

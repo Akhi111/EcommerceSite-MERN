@@ -1,12 +1,15 @@
-import userService from "../services/user.service.js";
+import {getUserProfileByToken, getAllUsers as getAllUsersService} from "../services/user.service.js";
+// import * as userService from "../services/user.service.js"
 
 export const getUserProfile = async (req, res) => {
+  const jwt = req.headers.authorization?.split(" ")[1];
+  console.log("req", jwt)
   try {
-    const jwt = req.headers.authorization?.split(" ")[1];
+    
     if (!jwt) {
       return res.status(404).send({ error: "token not found" });
     }
-    const user = await userService.getUserProfileByToken(jwt);
+    const user = await getUserProfileByToken(jwt);
     return res.status(200).send(user);
 
   } catch (error) {
@@ -16,7 +19,7 @@ export const getUserProfile = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await userService.getAllUsers();
+    const users = await getAllUsersService();
     return res.status(200).send(users);
 
   } catch (error) {

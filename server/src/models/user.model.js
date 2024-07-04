@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   },
   mobile: {
     type: String,
-    required: true,
+    // required: true,
   },
   //   In address user can uses multiple addresses. For that we use array and we storedd address by its id. i.e foreign key
   address: [
