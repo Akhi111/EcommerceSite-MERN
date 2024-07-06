@@ -1,12 +1,8 @@
 import {
-  createOrder,
-  placeOrder,
   confirmedOrder,
   shipOrder,
   deliverOrder,
   cancelledOrder,
-  findOrderById,
-  usersOrderHistory,
   getAllOrders,
   deleteOrder,
 } from "../services/order.service.js";
