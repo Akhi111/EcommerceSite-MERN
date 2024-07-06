@@ -1,6 +1,6 @@
 import { createReview, getAllReview } from "../services/review.service.js";
 
-const createTheReview = async (req, res) => {
+export const createTheReview = async (req, res) => {
   const user = req.user;
   try {
     const review = await createReview(req.body, user);
@@ -10,7 +10,7 @@ const createTheReview = async (req, res) => {
   }
 };
 
-const getAllTheReview = async (req, res) => {
+export const getAllTheReview = async (req, res) => {
   const productId = req.params.productId;
   try {
     const reviews = await getAllReview(productId);
@@ -19,5 +19,3 @@ const getAllTheReview = async (req, res) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
-export default { createTheReview, getAllTheReview };

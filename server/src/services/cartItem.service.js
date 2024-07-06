@@ -1,7 +1,7 @@
 import CartItem from "../models/cartItem.model.js";
-import { findUserById } from "./user.service";
+import { findUserById } from "./user.service.js";
 
-async function updateCartItem(userId, cartItemId, cartItemData) {
+export async function updateCartItem(userId, cartItemId, cartItemData) {
   try {
     const item = await findCartItemById(cartItemId);
     if (!item) {
@@ -26,7 +26,7 @@ async function updateCartItem(userId, cartItemId, cartItemData) {
   }
 }
 
-async function removeCartItem(userId, cartItemId) {
+export async function removeCartItem(userId, cartItemId) {
   try {
     const cartItem = await findCartItemById(cartItemId);
     const user = await findUserById(userId);
@@ -41,7 +41,7 @@ async function removeCartItem(userId, cartItemId) {
   }
 }
 
-async function findCartItemById(cartItemId) {
+export async function findCartItemById(cartItemId) {
   try {
     const cartItem = await findCartItemById(cartItemId);
     if (cartItem) {
@@ -54,4 +54,3 @@ async function findCartItemById(cartItemId) {
   }
 }
 
-export default { updateCartItem, removeCartItem, findCartItemById };

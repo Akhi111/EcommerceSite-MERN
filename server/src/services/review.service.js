@@ -1,7 +1,7 @@
 import Review from "../models/review.model.js";
-import findProductById from "../services/product.service.js";
+import {findProductById} from "../services/product.service.js";
 
-async function createReview(reqData, user) {
+export async function createReview(reqData, user) {
   const product = await findProductById(reqData.productId);
 
   const review = new Review({
@@ -14,9 +14,7 @@ async function createReview(reqData, user) {
   return await review.save();
 }
 
-async function getAllReview(productId) {
+export async function getAllReview(productId) {
   const product = await findProductById(reqData, productId);
   return await Review.find({ product: productId }).populate("user");
 }
-
-export default { createReview, getAllReview };

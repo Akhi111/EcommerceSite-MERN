@@ -1,7 +1,7 @@
 import Rating from "../models/rating.model.js";
-import findProductById from "../services/product.service.js";
+import {findProductById} from "../services/product.service.js";
 
-async function createRating(req, user) {
+export async function createRating(req, user) {
   const product = await findProductById(req.productId);
 
   const rating = new Rating({
@@ -14,8 +14,6 @@ async function createRating(req, user) {
   return await rating.save();
 }
 
-async function getProductRating(productId) {
+export async function getProductRating(productId) {
   return await Rating.find({ product: productId });
 }
-
-export default { createRating, getProductRating };

@@ -1,13 +1,13 @@
 import {
   createProduct,
   deleteProduct,
-  updateProduct,
+  createMultipleProduct,
   findProductById,
   getAllProducts,
-  createMultipleProduct,
+  updateProduct,
 } from "../services/product.service.js";
 
-const createTheProduct = async (req, res) => {
+export const createTheProduct = async (req, res) => {
   try {
     const product = await createProduct(req.body);
     return res.status(201).send(product);
@@ -16,7 +16,7 @@ const createTheProduct = async (req, res) => {
   }
 };
 
-const deleteTheProduct = async (req, res) => {
+export const deleteTheProduct = async (req, res) => {
   const productId = req.params.id;
   try {
     const product = await deleteProduct(productId);
@@ -26,7 +26,7 @@ const deleteTheProduct = async (req, res) => {
   }
 };
 
-const updateTheProduct = async (req, res) => {
+export const updateTheProduct = async (req, res) => {
   const productId = req.params.id;
   try {
     const product = await updateProduct(productId, req.body);
@@ -36,7 +36,7 @@ const updateTheProduct = async (req, res) => {
   }
 };
 
-const findTheProductById = async (req, res) => {
+export const findTheProductById = async (req, res) => {
   const productId = req.params.id;
   try {
     const product = await findProductById(productId);
@@ -46,7 +46,7 @@ const findTheProductById = async (req, res) => {
   }
 };
 
-const getAllTheProducts = async (req, res) => {
+export const getAllTheProducts = async (req, res) => {
   const productId = req.params.id;
   try {
     const products = await getAllProducts(req.query);
@@ -56,7 +56,7 @@ const getAllTheProducts = async (req, res) => {
   }
 };
 
-const createTheMultipleProducts = async (req, res) => {
+export const createTheMultipleProducts = async (req, res) => {
   const productId = req.params.id;
   try {
     const product = await createMultipleProduct(req.query);
@@ -66,11 +66,11 @@ const createTheMultipleProducts = async (req, res) => {
   }
 };
 
-export default {
-  createTheProduct,
-  deleteTheProduct,
-  updateTheProduct,
-  findTheProductById,
-  getAllTheProducts,
-  createTheMultipleProducts,
-};
+// export default {
+//   createTheProduct,
+//   deleteTheProduct,
+//   updateTheProduct,
+//   findTheProductById,
+//   getAllTheProducts,
+//   createTheMultipleProducts,
+// };

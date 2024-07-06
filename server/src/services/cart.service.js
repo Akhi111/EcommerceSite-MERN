@@ -2,7 +2,7 @@ import Cart from "../models/cart.model.js";
 import CartItem from "../models/cartItem.model.js";
 import Product from "../models/product.model.js";
 
-async function createCart(user) {
+export async function createCart(user) {
   try {
     const cart = new Cart({ user });
     const createdCart = await cart.save();
@@ -12,7 +12,7 @@ async function createCart(user) {
   }
 }
 
-async function findUserCart(userId) {
+export async function findUserCart(userId) {
   try {
     let cart = await Cart.findOne({ user: userId });
     if (!cart) {
@@ -42,7 +42,7 @@ async function findUserCart(userId) {
   }
 }
 
-async function addCartItem(userId, req) {
+export async function addCartItem(userId, req) {
   try {
     const cart = await Cart.findOne({ user: userId });
     if (!cart) {
@@ -86,4 +86,4 @@ async function addCartItem(userId, req) {
     throw new Error(`Error adding item to cart: ${error.message}`);
   }
 }
-export default { createCart, findUserCart, addCartItem };
+

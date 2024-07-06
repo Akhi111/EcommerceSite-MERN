@@ -1,7 +1,7 @@
 import Category from "../models/category.model.js";
 import Product from "../models/product.model.js";
 
-async function createProduct(reqData) {
+export async function createProduct(reqData) {
   let topLevel = await Category.findOne({ name: reqData.topLevelCategory });
 
   if (!topLevel) {
@@ -53,18 +53,18 @@ async function createProduct(reqData) {
   return await product.save();
 }
 
-async function deleteProduct(productId) {
+export async function deleteProduct(productId) {
   const product = await findProductById(productId);
 
   await Product.findByIdAndDelete(productId);
   return "Product deleted successfully";
 }
 
-async function updateProduct(productId, reqData) {
+export async function updateProduct(productId, reqData) {
   return await Product.findByIdAndUpdate(productId, reqData);
 }
 
-async function findProductById(id) {
+export async function findProductById(id) {
   const product = await Product.findById(id).populate("category").exec();
 
   if (!product) {
@@ -73,7 +73,7 @@ async function findProductById(id) {
   return product;
 }
 
-async function getAllProducts(reqQuery) {
+export async function getAllProducts(reqQuery) {
   let {
     category,
     color,
@@ -123,7 +123,7 @@ async function getAllProducts(reqQuery) {
   if (minDiscount) {
     query = query.where("discountPercent").gt(minDiscount);
   }
-//fix == to === in stock change it if any error occure
+  //fix == to === in stock change it if any error occure
   if (stock) {
     if (stock === "in_stock") {
       query = query.where("quantity").gt(0);
@@ -148,17 +148,17 @@ async function getAllProducts(reqQuery) {
   return { content: products, currentPage: pageNumber, totalPages };
 }
 
-async function createMultipleProduct(products) {
+export async function createMultipleProduct(products) {
   for (let product of products) {
     await createProduct(product);
   }
 }
 
-export default {
-  createProduct,
-  deleteProduct,
-  updateProduct,
-  findProductById,
-  getAllProducts,
-  createMultipleProduct,
-};
+// export default {
+//   createProduct,
+//   deleteProduct,
+//   updateProduct,
+//   findProductById,
+//   getAllProducts,
+//   createMultipleProduct,
+// };

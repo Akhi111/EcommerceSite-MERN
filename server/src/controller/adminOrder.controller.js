@@ -7,7 +7,7 @@ import {
   deleteOrder,
 } from "../services/order.service.js";
 
-const getAllTheOrders = async (req, res) => {
+export const getAllTheOrders = async (req, res) => {
   try {
     const orders = await getAllOrders();
     return res.status(200).send(orders);
@@ -16,7 +16,7 @@ const getAllTheOrders = async (req, res) => {
   }
 };
 
-const confiremedTheOrders = async (req, res) => {
+export const confiremedTheOrders = async (req, res) => {
   const orderId = req.params.orderId;
   try {
     const orders = await confirmedOrder(orderId);
@@ -26,7 +26,7 @@ const confiremedTheOrders = async (req, res) => {
   }
 };
 
-const shippOrders = async (req, res) => {
+export const shippOrders = async (req, res) => {
   const orderId = req.params.orderId;
   try {
     const orders = await shipOrder(orderId);
@@ -36,7 +36,7 @@ const shippOrders = async (req, res) => {
   }
 };
 
-const deliverOrders = async (req, res) => {
+export const deliverOrders = async (req, res) => {
   const orderId = req.params.orderId;
   try {
     const orders = await deliverOrder(orderId);
@@ -46,7 +46,7 @@ const deliverOrders = async (req, res) => {
   }
 };
 
-const cancelledOrders = async (req, res) => {
+export const cancelledOrders = async (req, res) => {
   const orderId = req.params.orderId;
   try {
     const orders = await cancelledOrder(orderId);
@@ -56,7 +56,7 @@ const cancelledOrders = async (req, res) => {
   }
 };
 
-const deleteOrders = async (req, res) => {
+export const deleteOrders = async (req, res) => {
   const orderId = req.params.orderId;
   try {
     const orders = await deleteOrder(orderId);
@@ -64,13 +64,4 @@ const deleteOrders = async (req, res) => {
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
-};
-
-export default {
-  getAllTheOrders,
-  confiremedTheOrders,
-  shippOrders,
-  deliverOrders,
-  cancelledOrders,
-  deleteOrders,
 };

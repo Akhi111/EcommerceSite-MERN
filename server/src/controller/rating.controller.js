@@ -1,6 +1,6 @@
 import { createRating, getProductRating } from "../services/rating.servece.js";
 
-const createTheRating = async (req, res) => {
+export const createTheRating = async (req, res) => {
   const user = req.user;
   try {
     const rating = await createRating(req.body, user);
@@ -10,7 +10,7 @@ const createTheRating = async (req, res) => {
   }
 };
 
-const getAllTheRatings = async (req, res) => {
+export const getAllTheRatings = async (req, res) => {
   const productId = req.params.productId;
   try {
     const ratings = await getProductRating(productId);
@@ -19,5 +19,3 @@ const getAllTheRatings = async (req, res) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
-export default { createTheRating, getAllTheRatings };

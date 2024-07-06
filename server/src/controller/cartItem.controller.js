@@ -4,7 +4,7 @@ import {
   findCartItemById,
 } from "../services/cartItem.service.js";
 
-const updateTheCartItem = async (req, res) => {
+export const updateTheCartItem = async (req, res) => {
   const user = req.user;
   try {
     const updatedCartItem = await updateCartItem(
@@ -18,7 +18,7 @@ const updateTheCartItem = async (req, res) => {
   }
 };
 
-const removeTheCartItem = async (req, res) => {
+export const removeTheCartItem = async (req, res) => {
   const user = req.user;
   try {
     await removeCartItem(user._id, req.params.id);
@@ -27,5 +27,3 @@ const removeTheCartItem = async (req, res) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
-export default { updateTheCartItem, removeTheCartItem };

@@ -7,7 +7,7 @@ import {
 } from "../services/user.service.js";
 import {generateToken} from "../utils/jwtProvider.js";
 import bcrypt from "bcrypt";
-import createCart from "../services/cart.service.js";
+import {createCart} from "../services/cart.service.js";
 
 export const signup = async (req, res) => {
   try {

@@ -1,13 +1,9 @@
-import {
-  createCart,
-  findUserCart,
-  addCartItem,
-} from "..//services/cart.service.js";
+import { findUserCart } from "..//services/cart.service.js";
 import Address from "../models/address.model.js";
 import product from "../models/product.model.js";
 import Order from "../models/order.model.js";
 
-async function createOrder(user, shippAddress) {
+export async function createOrder(user, shippAddress) {
   let address;
 
   if (shippAddress._id) {
@@ -50,7 +46,7 @@ async function createOrder(user, shippAddress) {
   return savedOrder;
 }
 
-async function placeOrder(orderId) {
+export async function placeOrder(orderId) {
   const order = await findOrderById(orderId);
 
   order.orderStatus = "PLACED";
@@ -59,7 +55,7 @@ async function placeOrder(orderId) {
   return await order.save();
 }
 
-async function confirmedOrder(orderId) {
+export async function confirmedOrder(orderId) {
   const order = await findOrderById(orderId);
 
   order.orderStatus = "CONFIRMED";
@@ -67,7 +63,7 @@ async function confirmedOrder(orderId) {
   return await order.save();
 }
 
-async function shipOrder(orderId) {
+export async function shipOrder(orderId) {
   const order = await findOrderById(orderId);
 
   order.orderStatus = "SHIPPED";
@@ -75,7 +71,7 @@ async function shipOrder(orderId) {
   return await order.save();
 }
 
-async function deliverOrder(orderId) {
+export async function deliverOrder(orderId) {
   const order = await findOrderById(orderId);
 
   order.orderStatus = "DELIVERED";
@@ -83,7 +79,7 @@ async function deliverOrder(orderId) {
   return await order.save();
 }
 
-async function cancelledOrder(orderId) {
+export async function cancelledOrder(orderId) {
   const order = await findOrderById(orderId);
 
   order.orderStatus = "CANCELLED";
@@ -91,7 +87,7 @@ async function cancelledOrder(orderId) {
   return await order.save();
 }
 
-async function findOrderById(orderId) {
+export async function findOrderById(orderId) {
   const order = await Order.findById(orderId)
     .populate("user")
     .populate({ path: "orderItems", populate: { path: "product" } })
@@ -100,7 +96,7 @@ async function findOrderById(orderId) {
   return order;
 }
 
-async function usersOrderHistory(userId) {
+export async function usersOrderHistory(userId) {
   try {
     const orders = await Order.find({ user: userId, orderStatus: "PLACED" })
       .populate({ path: "orderItems", populate: { path: "product" } })
@@ -111,26 +107,13 @@ async function usersOrderHistory(userId) {
   }
 }
 
-async function getAllOrders() {
+export async function getAllOrders() {
   return await Order.find()
     .populate({ path: "orderItems", populate: { path: "product" } })
     .lean();
 }
 
-async function deleteOrder(orderId) {
+export async function deleteOrder(orderId) {
   const order = await findOrderById(orderId);
   await Order.findByIdAndDelete(order._id);
 }
-
-export default {
-  createOrder,
-  placeOrder,
-  confirmedOrder,
-  shipOrder,
-  deliverOrder,
-  cancelledOrder,
-  findOrderById,
-  usersOrderHistory,
-  getAllOrders,
-  deleteOrder,
-};

@@ -4,7 +4,7 @@ import {
   usersOrderHistory,
 } from "../services/order.service.js";
 
-const createTheOrder = async (req, res) => {
+export const createTheOrder = async (req, res) => {
   const user = req.user;
   try {
     let createdOrder = await createOrder(user, req.body);
@@ -14,7 +14,7 @@ const createTheOrder = async (req, res) => {
   }
 };
 
-const findTheOrderById = async (req, res) => {
+export const findTheOrderById = async (req, res) => {
   const user = req.user;
   try {
     let createdOrder = await findOrderById(req.params.id);
@@ -24,7 +24,7 @@ const findTheOrderById = async (req, res) => {
   }
 };
 
-const OrderHistory = async (req, res) => {
+export const OrderHistory = async (req, res) => {
   const user = req.user;
   try {
     let createdOrder = await usersOrderHistory(user._id);
@@ -33,5 +33,3 @@ const OrderHistory = async (req, res) => {
     return res.status(500).send({ error: error.message });
   }
 };
-
-export default { createTheOrder, findTheOrderById, OrderHistory };

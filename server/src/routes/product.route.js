@@ -1,9 +1,9 @@
 import express from "express";
+import authenticate from "../middleware/authenticate.js";
 import {
   findTheProductById,
   getAllTheProducts,
 } from "../controller/product.controller.js";
-import authenticate from "../middleware/authenticate.js";
 
 const router = express.Router();
 
