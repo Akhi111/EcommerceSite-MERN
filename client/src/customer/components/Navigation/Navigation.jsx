@@ -23,6 +23,7 @@ import navigation from "./navigationData.js";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+import AuthModal from "../../Auth/AuthModal.jsx";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -32,6 +33,7 @@ export default function Navigation() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
+  const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
 
@@ -371,7 +373,7 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {true ? (
+                  {false ? (
                     <div>
                       <Avatar
                         className="text-white"
@@ -407,7 +409,7 @@ export default function Navigation() {
                         }}
                       >
                         <MenuItem onClick={handleMyOrderClick}>
-                          {true.user?.role === "ROLE_ADMIN"
+                          {false.user?.role === "ROLE_ADMIN"
                             ? "Admin Dashboard"
                             : "My Orders"}
                         </MenuItem>
@@ -417,7 +419,7 @@ export default function Navigation() {
                   ) : (
                     <Button
                       onClick={handleOpen}
-                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                      className="text-sm font-medium text-[#fbc170] hover:text-[#f7941f]"
                     >
                       Signin
                     </Button>
@@ -453,6 +455,8 @@ export default function Navigation() {
           </div>
         </nav>
       </header>
+
+      <AuthModal handleClose={handleClose} open={openAuthModal} />
     </div>
   );
 }
