@@ -20,7 +20,8 @@ export const deleteTheProduct = async (req, res) => {
   const productId = req.params.id;
   try {
     const product = await deleteProduct(productId);
-    return res.status(201).send(product);
+    // return res.status(201).send(product);
+    return res.status(200).send({ message: 'Product deleted successfully' });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
@@ -59,18 +60,10 @@ export const getAllTheProducts = async (req, res) => {
 export const createTheMultipleProducts = async (req, res) => {
   const productId = req.params.id;
   try {
-    const product = await createMultipleProduct(req.query);
+    // const product = 
+    await createMultipleProduct(req.query);
     return res.status(201).send({ message: "Products created successfully" });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
 };
-
-// export default {
-//   createTheProduct,
-//   deleteTheProduct,
-//   updateTheProduct,
-//   findTheProductById,
-//   getAllTheProducts,
-//   createTheMultipleProducts,
-// };

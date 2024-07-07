@@ -3,8 +3,6 @@ import {
   createTheProduct,
   deleteTheProduct,
   updateTheProduct,
-  findTheProductById,
-  getAllTheProducts,
   createTheMultipleProducts,
 } from "../controller/product.controller.js";
 import authenticate from "../middleware/authenticate.js";

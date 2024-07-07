@@ -14,9 +14,11 @@ export async function createCart(user) {
 
 export async function findUserCart(userId) {
   try {
+    console.log("Finding cart for user with ID:", userId);
+
     let cart = await Cart.findOne({ user: userId });
     if (!cart) {
-      throw new Error("Cart not found");
+      throw new Error("Cart not found for user with ID: " + userId);
     }
 
     let cartItems = await CartItem.find({ cart: cart._id }).populate("product");
@@ -67,7 +69,7 @@ export async function addCartItem(userId, req) {
       return "Item quantity updated in cart";
     } else {
       //Create new cart item if not present
-      const cartItem = new cartItem({
+      const cartItem = new CartItem({
         product: product._id,
         cart: cart._id,
         quantity: 1,

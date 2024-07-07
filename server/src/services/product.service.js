@@ -32,7 +32,7 @@ export async function createProduct(reqData) {
   if (!thirdLevel) {
     thirdLevel = new Category({
       name: reqData.thirdLevelCategory,
-      parentCategory: secondLevelCategory._id,
+      parentCategory: secondLevel._id,
       level: 3,
     });
   }
@@ -153,12 +153,3 @@ export async function createMultipleProduct(products) {
     await createProduct(product);
   }
 }
-
-// export default {
-//   createProduct,
-//   deleteProduct,
-//   updateProduct,
-//   findProductById,
-//   getAllProducts,
-//   createMultipleProduct,
-// };

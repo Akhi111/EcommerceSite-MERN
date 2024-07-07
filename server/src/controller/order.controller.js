@@ -5,7 +5,7 @@ import {
 } from "../services/order.service.js";
 
 export const createTheOrder = async (req, res) => {
-  const user = req.user;
+  const user = await req.user;
   try {
     let createdOrder = await createOrder(user, req.body);
     res.status(201).send(createdOrder);
@@ -15,7 +15,7 @@ export const createTheOrder = async (req, res) => {
 };
 
 export const findTheOrderById = async (req, res) => {
-  const user = req.user;
+  const user = await req.user;
   try {
     let createdOrder = await findOrderById(req.params.id);
     res.status(201).send(createdOrder);
@@ -25,7 +25,7 @@ export const findTheOrderById = async (req, res) => {
 };
 
 export const OrderHistory = async (req, res) => {
-  const user = req.user;
+  const user = await req.user;
   try {
     let createdOrder = await usersOrderHistory(user._id);
     res.status(201).send(createdOrder);

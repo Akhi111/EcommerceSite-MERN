@@ -2,48 +2,61 @@ import { findUserCart } from "..//services/cart.service.js";
 import Address from "../models/address.model.js";
 import product from "../models/product.model.js";
 import Order from "../models/order.model.js";
+import OrderItem from "..//models/orderItems.js"
 
 export async function createOrder(user, shippAddress) {
   let address;
 
-  if (shippAddress._id) {
-    let existAddress = await Address.findById(shippAddress._id);
-    address = existAddress;
-  } else {
-    address = new Address(shippAddress);
-    address.user = user;
-    await address.save();
+  try {
+    if (shippAddress._id) {
+      let existAddress = await Address.findById(shippAddress._id);
+      address = existAddress;
+    } else {
+      address = new Address(shippAddress);
+      address.user = user;
+      await address.save();
 
-    user.addresses.push(address);
-    await user.save();
-  }
+      // Ensure user.addresses is initialized as an array [extra added code from chatgpt]
+      // if (!user.address) {
+      //   user.address = [];
+      // }
+      // this line is in used if in order.controller.js file [const user = await req.user;] for all functions not used await .if await is used there no need to use this code in order.service.js file
+      user.address.push(address);
+      await user.save();
+    }
 
-  const cart = await findUserCart(user._id);
-  const orderItems = [];
+    const cart = await findUserCart(user._id);
+    const orderItems = [];
 
-  for (const item of cart.CartItem) {
-    const orderItem = new orderItems({
-      price: item.price,
-      product: item.product,
-      quantity: item.quantity,
-      size: item.size,
-      userId: item.userId,
-      discoutedPrice: item.discoutedPrice,
+    for (const item of cart.cartItems) {
+      //in below line changed orderItems to OrderItems as per AI
+      const orderItem = new OrderItem({
+        price: item.price,
+        product: item.product,
+        quantity: item.quantity,
+        size: item.size,
+        userId: item.userId,
+        discountedPrice: item.discountedPrice,
+      });
+      const createdOrderItem = await orderItem.save();
+      //below line changed orderItems to orderItem needs to fix this if error occures
+      orderItems.push(createdOrderItem);
+    }
+    const createdOrder = new Order({
+      user,
+      orderItems,
+      totalPrice: cart.totalPrice,
+      totalDiscountedPrice: cart.totalDiscountedPrice,
+      discount: cart.discount,
+      totalItem: cart.totalItem, //changed to totalItem => to totalItems
+      shippAddress: address,
     });
-    const createdOrderItem = await orderItem.save();
-    orderItems.push(createdOrderItem);
+    const savedOrder = await createdOrder.save();
+    return savedOrder;
+
+  } catch (error) {
+    throw new Error(error.message);
   }
-  const createdOrder = new Order({
-    user,
-    orderItems,
-    totalPrice: cart.totalPrice,
-    totalDiscountedPrice: cart.totalDiscountedPrice,
-    discount: cart.discount,
-    totalItem: cart.totalItem,
-    shippAddress: address,
-  });
-  const savedOrder = await createdOrder.save();
-  return savedOrder;
 }
 
 export async function placeOrder(orderId) {
