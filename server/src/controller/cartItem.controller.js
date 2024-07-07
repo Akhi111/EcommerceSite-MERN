@@ -5,7 +5,7 @@ import {
 } from "../services/cartItem.service.js";
 
 export const updateTheCartItem = async (req, res) => {
-  const user = req.user;
+  const user = await req.user;
   try {
     const updatedCartItem = await updateCartItem(
       user._id,
@@ -19,7 +19,7 @@ export const updateTheCartItem = async (req, res) => {
 };
 
 export const removeTheCartItem = async (req, res) => {
-  const user = req.user;
+  const user = await req.user;
   try {
     await removeCartItem(user._id, req.params.id);
     return res.status(200).send({ message: "cart item removed successfully " });
