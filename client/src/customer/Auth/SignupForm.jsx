@@ -1,8 +1,21 @@
 import { Button, Grid, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, signup } from "../../redux/Auth/Action.js";
+import { useEffect } from "react";
 
 const SignupForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const {auth} = useSelector(store=>store)
+
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt));
+    }
+  }, [jwt, auth.jwt]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +28,7 @@ const SignupForm = () => {
       email: data.get("email"),
       password: data.get("password"),
     };
+    dispatch(signup(userData));
     console.log("userData", userData);
   };
 

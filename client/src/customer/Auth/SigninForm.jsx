@@ -1,8 +1,11 @@
 import { Button, Grid, TextField } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getUser, signin } from "../../redux/Auth/Action.js";
+import { useEffect } from "react";
 
 const SigninForm = () => {
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -11,11 +14,10 @@ const SigninForm = () => {
     const data = new FormData(e.currentTarget);
 
     const userData = {
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
       email: data.get("email"),
       password: data.get("password"),
     };
+    dispatch(signin(userData))
     console.log("userData", userData);
   };
 
