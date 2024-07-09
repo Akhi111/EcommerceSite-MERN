@@ -2,7 +2,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../config/apiConfig.js";
 import { SIGNUP, SIGNIN, GET_USER, SIGNOUT } from "./ActionType.js";
 
-const token = localStorage.getItem("jwt");
+// const token = localStorage.getItem("jwt");
 
 export const signup = (userData) => ({
   type: SIGNUP,
