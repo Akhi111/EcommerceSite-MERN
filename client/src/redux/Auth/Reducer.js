@@ -1,15 +1,4 @@
-import {
-  SIGNUP_PENDING,
-  SIGNUP_FULFILLED,
-  SIGNUP_REJECTED,
-  SIGNIN_PENDING,
-  SIGNIN_FULFILLED,
-  SIGNIN_REJECTED,
-  GET_USER_PENDING,
-  GET_USER_FULFILLED,
-  GET_USER_REJECTED,
-  SIGNOUT,
-} from "./ActionType.js";
+import { GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, SIGNIN_FAILURE, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNOUT, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "./ActionType.js";
 
 const initialState = {
   user: null,
@@ -20,21 +9,21 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SIGNUP_PENDING:
-    case SIGNIN_PENDING:
-    case GET_USER_PENDING:
+    case SIGNUP_REQUEST:
+    case SIGNIN_REQUEST:
+    case GET_USER_REQUEST:
       return { ...state, isLoading: true, error: null };
 
-    case SIGNUP_FULFILLED:
-    case SIGNIN_FULFILLED:
+    case SIGNUP_SUCCESS:
+    case SIGNIN_SUCCESS:
       return { ...state, isLoading: false, error: null, jwt: action.payload };
 
-    case GET_USER_FULFILLED:
+    case GET_USER_SUCCESS:
       return { ...state, isLoading: false, error: null, user: action.payload };
 
-    case SIGNUP_REJECTED:
-    case SIGNIN_REJECTED:
-    case GET_USER_REJECTED:
+    case SIGNUP_FAILURE:
+    case SIGNIN_FAILURE:
+    case GET_USER_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
 
     case SIGNOUT:

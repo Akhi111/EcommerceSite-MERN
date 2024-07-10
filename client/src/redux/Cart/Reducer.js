@@ -33,7 +33,7 @@ export const cartReducer = (state = initialState, action) => {
     case ADD_ITEM_TO_CART_FAILURE:
       return { ...state, loading: false, error: action.payload };
     case GET_CART_REQUEST:
-      return { ...state, loading: true, error:null };
+      return { ...state, loading: true, error: null };
     case GET_CART_SUCCESS:
       return {
         ...state,
@@ -52,7 +52,7 @@ export const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error:null
+        error: null,
       };
     case REMOVE_CART_ITEM_SUCCESS:
       return {

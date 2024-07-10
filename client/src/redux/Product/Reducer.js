@@ -15,7 +15,6 @@ const initialState = {
 };
 // Reducer function
 export const customerProductReducer = (state = initialState, action) => {
-
   switch (action.type) {
     case FIND_PRODUCTS_REQUEST:
     case FIND_PRODUCT_BY_ID_REQUEST:
@@ -26,14 +25,14 @@ export const customerProductReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        products: action.payload,  // Assuming action.payload is an array of products
+        products: action.payload, // Assuming action.payload is an array of products
       };
     case FIND_PRODUCT_BY_ID_SUCCESS:
-      return { ...state, loading: false, error: null, product: action.payload };  // Assuming action.payload is a single product object
+      return { ...state, loading: false, error: null, product: action.payload }; // Assuming action.payload is a single product object
 
     case FIND_PRODUCTS_FAILURE:
     case FIND_PRODUCT_BY_ID_FAILURE:
-      return { ...state, loading: false, error: action.payload };  // Assuming action.payload contains the error message or details
+      return { ...state, loading: false, error: action.payload }; // Assuming action.payload contains the error message or details
 
     default:
       return state;

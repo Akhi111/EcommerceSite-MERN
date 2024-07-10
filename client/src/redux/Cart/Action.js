@@ -25,7 +25,6 @@ export const get = () => async (dispatch) => {
   }
 };
 
-
 export const addItemToCart = (reqData) => async (dispatch) => {
   dispatch({ type: ADD_ITEM_TO_CART_REQUEST });
 
@@ -37,7 +36,6 @@ export const addItemToCart = (reqData) => async (dispatch) => {
   }
 };
 
-
 export const removeCartItem = (reqData) => async (dispatch) => {
   dispatch({ type: REMOVE_CART_ITEM_REQUEST });
 
@@ -48,7 +46,6 @@ export const removeCartItem = (reqData) => async (dispatch) => {
     dispatch({ type: REMOVE_CART_ITEM_FAILURE, payload: error.message });
   }
 };
-
 
 export const updateCartItem = (reqData) => async (dispatch) => {
   dispatch({ type: UPDATE_CART_ITEM_REQUEST });
